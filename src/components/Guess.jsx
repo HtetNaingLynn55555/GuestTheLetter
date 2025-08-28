@@ -1,14 +1,16 @@
 import Box from "./Box";
 import KeyBoard from "./KeyBoard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import randomFourLetterArrayGenerator from "../utils/randomFourLetterArrayGenerator";
 
-let defaultLevel = randomFourLetterArrayGenerator();
+let defaultAnswer = randomFourLetterArrayGenerator();
 export default function Guess() {
   // Game Lavel
-  let [level, setLevel] = useState(defaultLevel);
+  let [answer, setAnswer] = useState(["a", "b", "c", "d"]);
 
   let [isPlaying, setIsPlaying] = useState(false);
+  let [startTime, setStartTime] = useState(null);
+  let [timeDifference, setTimeDifference] = useState(null);
   // Guess letter box
   let [boxClicked, setBoxClicked] = useState(false);
   let [boxClickedIndex, setBoxClickedIndex] = useState(0);
@@ -22,7 +24,7 @@ export default function Guess() {
     { id: 4, text: "?", isTextChange: false },
   ]);
 
-  let [playerGuessLetter, setPlayerGuessLetter] = useState("");
+  let [playerGuessLetter, setPlayerGuessLetter] = useState(false);
 
   // Play the game and reset the game
   let playButtonHandler = () => {
@@ -34,9 +36,14 @@ export default function Guess() {
         { id: 4, text: "?", isTextChange: false },
       ]);
 
+      setCorrectAnswer(0);
+      setCorrectPosition(0);
       setPlayerGuessLetter("");
       setBoxClicked(!boxClicked);
     }
+    setStartTime(Date.now());
+    setTimeDifference(null);
+
     setIsPlaying(!isPlaying);
   };
 
@@ -54,36 +61,42 @@ export default function Guess() {
   };
 
   let handlePlayerGuessLetter = (letter) => {
-    setPlayerGuessLetter(letter);
+    setPlayerGuessLetter(!playerGuessLetter);
     letterBox.map((box) => {
       if (box.id === boxClickedIndex) {
-        box.text = letter;
+        box.text = letter.toLowerCase();
         box.isTextChange = true;
       }
     });
     setLetterBox(letterBox);
+
     // setBoxClicked(false);
     console.log("Player guess letter: ", letter);
   };
 
   let onSubmitHandler = () => {
-    console.log("level", level);
-    console.log("this is ", letterBox);
-
     let answersArray = letterBox.map((box) => box.text);
+    let samePositionArray;
+    let correctAnswerCount = answer.filter((letter) =>
+      answersArray.includes(letter)
+    ).length;
 
-    let correctAnswerCount = 0;
-    answersArray.forEach((element) => {
-      level.find((letter) => {
-        if (element === letter) {
-          correctAnswerCount += 1;
-          return true;
+    samePositionArray = answer
+      .map((letter, index) => {
+        if (letter === answersArray[index]) {
+          return index;
+        } else {
+          return -1;
         }
-        return false;
-      });
-    });
+      })
+      .filter((index) => index !== -1);
     setCorrectAnswer(correctAnswerCount);
-    console.log("answersArray", answersArray);
+    setCorrectPosition(samePositionArray.length);
+
+    if (startTime) {
+      const difference = Date.now() - startTime;
+      setTimeDifference(difference);
+    }
     setIsSubmitting(true);
   };
 
@@ -92,7 +105,7 @@ export default function Guess() {
       <div className="text-3xl">Guess the letter in the box</div>
       <div> guess letter from a~z</div>
       <div>
-        {level.map((letter, index) => (
+        {answer.map((letter, index) => (
           <span key={index}>{letter},</span>
         ))}
       </div>
@@ -111,7 +124,9 @@ export default function Guess() {
               key={box.id}
               getBoxClickedIndex={getBoxClickedIndex}
               indexNumber={box.id}
+              text={box.text}
               box={box}
+              answer={answer[box.id - 1]}
             />
           ))}
         </div>
@@ -130,7 +145,7 @@ export default function Guess() {
         <div className="text-2xl mt-8 flex justify-between gap-5">
           <div>Correct Answer: {correctAnswer}</div>
           <div>Correct Position: {correctPosition}</div>
-          <div>Total Time : 00:00</div>
+          <div>Total Time : {Math.floor(timeDifference / 1000)} s</div>
         </div>
       )}
 
