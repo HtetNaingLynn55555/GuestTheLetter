@@ -25,7 +25,7 @@ export default function Box({
     <div className="flex flex-col items-center sm:gap-2">
       <div
         onClick={onClickBox}
-        className={`select-none w-23 h-23 border-4  border-white flex justify-center items-center text-4xl hover:cursor-pointer  `}
+        className={`select-none h-11 w-11 sm:w-23 sm:h-23 border-4  border-white flex justify-center items-center sm:text-2xl text-[16px] md:text-4xl hover:cursor-pointer  `}
       >
         <span className={`${box.isTextChange ? "text-teal-500" : ""}`}>
           {box.text}

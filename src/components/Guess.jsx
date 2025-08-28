@@ -102,18 +102,18 @@ export default function Guess() {
 
   return (
     <div className=" font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center  h-auto  pt-4 gap-1 sm:gap-5">
-      <div className="text-3xl">Guess the letter in the box</div>
+      <div className="text-[20px] sm:text-3xl">Guess the letter in the box</div>
       <div> guess letter from a~z</div>
 
       <button
-        className="border-2 border-white w-40 h-15 hover:cursor-pointer mt-8 rounded-lg hover:bg-[#6e706f]"
+        className="border-2 border-white w-20 h-7 sm:w-40 sm:h-15 hover:cursor-pointer mt-4 sm:mt-8 rounded-lg hover:bg-[#6e706f]"
         onClick={playButtonHandler}
       >
-        {isPlaying ? "Reset Game" : "Play Game"}
+        {isPlaying ? "Reset" : "Play"}
       </button>
 
       {isPlaying && (
-        <div className="flex justify-center items-center gap-1 sm:gap-6 mt-8">
+        <div className="flex justify-center items-center gap-1 sm:gap-6 mt-4 sm:mt-8">
           {letterBox.map((box) => (
             <Box
               key={box.id}
@@ -130,14 +130,14 @@ export default function Guess() {
       {isPlaying && (
         <button
           onClick={onSubmitHandler}
-          className="border-2 border-white w-40 h-15 hover:cursor-pointer mt-8 rounded-lg hover:bg-[#6e706f]"
+          className="border-2 border-white sm:w-40 w-20 h-7 sm:h-15 hover:cursor-pointer mt-4 sm:mt-8 rounded-lg hover:bg-[#6e706f]"
         >
           Submit
         </button>
       )}
 
       {isPlaying && isSubmitting && (
-        <div className="text-2xl mt-8 flex justify-between gap-1 sm:gap-5">
+        <div className="text-[16px] sm:text-2xl mt-4 sm:mt-8 flex justify-between gap-1 sm:gap-5">
           <div>Correct Answer: {correctAnswer}</div>
           <div>Correct Position: {correctPosition}</div>
           <div>Total Time : {Math.floor(timeDifference / 1000)} s</div>
@@ -145,7 +145,7 @@ export default function Guess() {
       )}
 
       {isPlaying && boxClicked && (
-        <div className="mt-8">
+        <div className=" mt-4 sm:mt-8">
           <KeyBoard handlePlayerGuessLetter={handlePlayerGuessLetter} />
         </div>
       )}
