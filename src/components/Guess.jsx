@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import randomFourLetterArrayGenerator from "../utils/randomFourLetterArrayGenerator";
 
 let defaultAnswer = randomFourLetterArrayGenerator();
+console.log("defaultAnswer", defaultAnswer);
 export default function Guess() {
   // Game Lavel
-  let [answer, setAnswer] = useState(["a", "b", "c", "d"]);
+  let [answer, setAnswer] = useState(defaultAnswer);
 
   let [isPlaying, setIsPlaying] = useState(false);
   let [startTime, setStartTime] = useState(null);
@@ -103,11 +104,6 @@ export default function Guess() {
     <div className="scroll-smooth font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center h-auto pt-4 gap-5">
       <div className="text-3xl">Guess the letter in the box</div>
       <div> guess letter from a~z</div>
-      <div>
-        {answer.map((letter, index) => (
-          <span key={index}>{letter},</span>
-        ))}
-      </div>
 
       <button
         className="border-2 border-white w-40 h-15 hover:cursor-pointer mt-8 rounded-lg hover:bg-[#6e706f]"
