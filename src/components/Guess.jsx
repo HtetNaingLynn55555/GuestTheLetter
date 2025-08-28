@@ -12,7 +12,9 @@ export default function Guess() {
   // Guess letter box
   let [boxClicked, setBoxClicked] = useState(false);
   let [boxClickedIndex, setBoxClickedIndex] = useState(0);
-
+  let [isSubmitting, setIsSubmitting] = useState(false);
+  let [correctAnswer, setCorrectAnswer] = useState(0);
+  let [correctPosition, setCorrectPosition] = useState(0);
   let [letterBox, setLetterBox] = useState([
     { id: 1, text: "?", isTextChange: false },
     { id: 2, text: "?", isTextChange: false },
@@ -64,6 +66,27 @@ export default function Guess() {
     console.log("Player guess letter: ", letter);
   };
 
+  let onSubmitHandler = () => {
+    console.log("level", level);
+    console.log("this is ", letterBox);
+
+    let answersArray = letterBox.map((box) => box.text);
+
+    let correctAnswerCount = 0;
+    answersArray.forEach((element) => {
+      level.find((letter) => {
+        if (element === letter) {
+          correctAnswerCount += 1;
+          return true;
+        }
+        return false;
+      });
+    });
+    setCorrectAnswer(correctAnswerCount);
+    console.log("answersArray", answersArray);
+    setIsSubmitting(true);
+  };
+
   return (
     <div className="scroll-smooth font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center h-auto pt-4 gap-5">
       <div className="text-3xl">Guess the letter in the box</div>
@@ -91,6 +114,23 @@ export default function Guess() {
               box={box}
             />
           ))}
+        </div>
+      )}
+
+      {isPlaying && (
+        <button
+          onClick={onSubmitHandler}
+          className="border-2 border-white w-40 h-15 hover:cursor-pointer mt-8 rounded-lg hover:bg-[#6e706f]"
+        >
+          Submit
+        </button>
+      )}
+
+      {isPlaying && isSubmitting && (
+        <div className="text-2xl mt-8 flex justify-between gap-5">
+          <div>Correct Answer: {correctAnswer}</div>
+          <div>Correct Position: {correctPosition}</div>
+          <div>Total Time : 00:00</div>
         </div>
       )}
 
