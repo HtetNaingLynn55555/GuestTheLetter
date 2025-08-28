@@ -5,6 +5,8 @@ import { useState } from "react";
 export default function Guess() {
   let [isPlaying, setIsPlaying] = useState(false);
 
+  let [boxClicked, setBoxClicked] = useState(false);
+  let [boxClickedIndex, setBoxClickedIndex] = useState(0);
   let [letterBox, setLetterBox] = useState([
     { id: 1, text: "?", isTextChange: false },
     { id: 2, text: "?", isTextChange: false },
@@ -12,14 +14,9 @@ export default function Guess() {
     { id: 4, text: "?", isTextChange: false },
   ]);
 
-  let [guestBoxActive, setGuestBoxActive] = useState(1);
   let [playerGuessLetter, setPlayerGuessLetter] = useState("");
-  let [description, setDescription] = useState([
-    "first",
-    "second",
-    "third",
-    "fourth",
-  ]);
+
+  // Play the game and reset the game
   let playButtonHandler = () => {
     if (isPlaying) {
       setLetterBox([
@@ -28,42 +25,39 @@ export default function Guess() {
         { id: 3, text: "?", isTextChange: false },
         { id: 4, text: "?", isTextChange: false },
       ]);
-      setGuestBoxActive(1);
+
       setPlayerGuessLetter("");
+      setBoxClicked(!boxClicked);
     }
     setIsPlaying(!isPlaying);
   };
 
-  let handleGuestBoxState = () => {
-    if (guestBoxActive < 5) {
-      setGuestBoxActive(guestBoxActive + 1);
-    }
+  let getBoxClickedIndex = (index) => {
+    setBoxClicked(true);
+    setBoxClickedIndex(index);
+
+    letterBox.map((box) => {
+      if (box.id === index) {
+        box.text = "_";
+      }
+    });
+
+    setLetterBox(letterBox);
   };
 
   let handlePlayerGuessLetter = (letter) => {
     setPlayerGuessLetter(letter);
-    if (letter === "{bksp}") {
-      setGuestBoxActive(guestBoxActive - 1);
-      letterBox.map((box) => {
-        if (box.id === guestBoxActive - 1) {
-          box.text = "?";
-          box.isTextChange = false;
-        } else {
-          box.text = box.text;
-        }
-      });
-    } else {
-      letterBox.map((box) => {
-        if (box.id === guestBoxActive) {
-          box.text = letter;
-          box.isTextChange = true;
-        } else {
-          box.text = box.text;
-        }
-      });
-      setLetterBox(letterBox);
-    }
+    letterBox.map((box) => {
+      if (box.id === boxClickedIndex) {
+        box.text = letter;
+        box.isTextChange = true;
+      }
+    });
+    setLetterBox(letterBox);
+    // setBoxClicked(false);
+    console.log("Player guess letter: ", letter);
   };
+
   return (
     <div className="scroll-smooth font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center h-auto pt-4 gap-5">
       <div className="text-3xl">Guess the letter in the box</div>
@@ -81,29 +75,17 @@ export default function Guess() {
           {letterBox.map((box) => (
             <Box
               key={box.id}
-              guestBoxActive={guestBoxActive}
+              getBoxClickedIndex={getBoxClickedIndex}
               indexNumber={box.id}
               box={box}
             />
           ))}
         </div>
       )}
-      {isPlaying && (
+
+      {isPlaying && boxClicked && (
         <div className="mt-8">
-          {guestBoxActive < 5 && guestBoxActive > 0
-            ? `Guess the ${description[guestBoxActive - 1]} letter of the box`
-            : guestBoxActive <= 0
-            ? "No more letter to delete"
-            : "All letter are guessed"}
-          {/* dynamic message to show */}
-        </div>
-      )}
-      {isPlaying && (
-        <div className="mt-8">
-          <KeyBoard
-            handleGuestBoxState={handleGuestBoxState}
-            handlePlayerGuessLetter={handlePlayerGuessLetter}
-          />
+          <KeyBoard handlePlayerGuessLetter={handlePlayerGuessLetter} />
         </div>
       )}
     </div>
