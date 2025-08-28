@@ -1,14 +1,12 @@
 import Box from "./Box";
 import KeyBoard from "./KeyBoard";
 import { useState } from "react";
+import randomFourLetterArrayGenerator from "../utils/randomFourLetterArrayGenerator";
 
+let defaultLevel = randomFourLetterArrayGenerator();
 export default function Guess() {
   // Game Lavel
-  let [level, setLevel] = useState({
-    levelOne: ["a", "b", "c", "d"],
-    levelTwo: ["e", "f", "g", "h"],
-    levelThree: ["i", "j", "k", "l"],
-  });
+  let [level, setLevel] = useState(defaultLevel);
 
   let [isPlaying, setIsPlaying] = useState(false);
   // Guess letter box
@@ -70,6 +68,11 @@ export default function Guess() {
     <div className="scroll-smooth font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center h-auto pt-4 gap-5">
       <div className="text-3xl">Guess the letter in the box</div>
       <div> guess letter from a~z</div>
+      <div>
+        {level.map((letter, index) => (
+          <span key={index}>{letter},</span>
+        ))}
+      </div>
 
       <button
         className="border-2 border-white w-40 h-15 hover:cursor-pointer mt-8 rounded-lg hover:bg-[#6e706f]"
