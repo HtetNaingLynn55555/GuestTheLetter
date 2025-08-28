@@ -5,8 +5,20 @@ export default function Guest() {
   let [isPlaying, setIsPlaying] = useState(false);
   let numberOfBox = [1, 2, 3, 4];
   let [guestBoxActive, setGuestBoxActive] = useState(1);
+  let [description, setDescription] = useState([
+    "first",
+    "second",
+    "third",
+    "fourth",
+  ]);
   let playButtonHandler = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  let handleGuestBoxState = () => {
+    if (guestBoxActive < 4) {
+      setGuestBoxActive(guestBoxActive + 1);
+    }
   };
   return (
     <div className="scroll-smooth font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center h-auto pt-4 gap-5">
@@ -29,7 +41,16 @@ export default function Guest() {
       )}
       {isPlaying && (
         <div className="mt-8">
-          <KeyBoard />
+          {
+            `Guess the ${
+              description[guestBoxActive - 1]
+            } letter of the box` /* dynamic description based on active box */
+          }
+        </div>
+      )}
+      {isPlaying && (
+        <div className="mt-8">
+          <KeyBoard handleGuestBoxState={handleGuestBoxState} />
         </div>
       )}
     </div>
