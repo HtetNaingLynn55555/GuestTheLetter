@@ -3,10 +3,18 @@ import KeyBoard from "./KeyBoard";
 import { useState } from "react";
 
 export default function Guess() {
-  let [isPlaying, setIsPlaying] = useState(false);
+  // Game Lavel
+  let [level, setLevel] = useState({
+    levelOne: ["a", "b", "c", "d"],
+    levelTwo: ["e", "f", "g", "h"],
+    levelThree: ["i", "j", "k", "l"],
+  });
 
+  let [isPlaying, setIsPlaying] = useState(false);
+  // Guess letter box
   let [boxClicked, setBoxClicked] = useState(false);
   let [boxClickedIndex, setBoxClickedIndex] = useState(0);
+
   let [letterBox, setLetterBox] = useState([
     { id: 1, text: "?", isTextChange: false },
     { id: 2, text: "?", isTextChange: false },
