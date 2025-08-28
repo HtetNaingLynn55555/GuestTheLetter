@@ -101,7 +101,7 @@ export default function Guess() {
   };
 
   return (
-    <div className="scroll-smooth font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center h-auto pt-4 gap-5">
+    <div className=" font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center  h-auto  pt-4 gap-1 sm:gap-5">
       <div className="text-3xl">Guess the letter in the box</div>
       <div> guess letter from a~z</div>
 
@@ -113,7 +113,7 @@ export default function Guess() {
       </button>
 
       {isPlaying && (
-        <div className="flex justify-center items-center gap-6 mt-8">
+        <div className="flex justify-center items-center gap-1 sm:gap-6 mt-8">
           {letterBox.map((box) => (
             <Box
               key={box.id}
@@ -137,7 +137,7 @@ export default function Guess() {
       )}
 
       {isPlaying && isSubmitting && (
-        <div className="text-2xl mt-8 flex justify-between gap-5">
+        <div className="text-2xl mt-8 flex justify-between gap-1 sm:gap-5">
           <div>Correct Answer: {correctAnswer}</div>
           <div>Correct Position: {correctPosition}</div>
           <div>Total Time : {Math.floor(timeDifference / 1000)} s</div>

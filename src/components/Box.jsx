@@ -22,7 +22,7 @@ export default function Box({
   }, [text]);
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center sm:gap-2">
       <div
         onClick={onClickBox}
         className={`select-none w-23 h-23 border-4  border-white flex justify-center items-center text-4xl hover:cursor-pointer  `}

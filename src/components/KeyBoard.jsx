@@ -40,7 +40,7 @@ export default function KeyBoard({ handlePlayerGuessLetter }) {
   };
 
   return (
-    <div className="App">
+    <div className="bg-red mb-8">
       {/* <input
         value={input}
         placeholder={"Tap on the virtual keyboard to start"}
