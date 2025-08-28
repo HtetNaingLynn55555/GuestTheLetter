@@ -1,4 +1,5 @@
 import Box from "./Box";
+import KeyBoard from "./KeyBoard";
 export default function Guest() {
   return (
     <div className="font-poppins bg-bg-primary text-white bg-black flex flex-col justify-center items-center h-screen">
@@ -9,6 +10,9 @@ export default function Guest() {
         <Box />
         <Box />
         <Box />
+      </div>
+      <div className="mt-8">
+        <KeyBoard />
       </div>
     </div>
   );
