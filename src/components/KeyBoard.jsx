@@ -15,7 +15,7 @@ export default function KeyBoard({ handlePlayerGuessLetter }) {
 
   const onChange = (input) => {
     setInput(input);
-    console.log("Input changed", input);
+    
   };
 
   const handleShift = () => {
@@ -24,7 +24,7 @@ export default function KeyBoard({ handlePlayerGuessLetter }) {
   };
 
   const onKeyPress = (button) => {
-    console.log("Button pressed", button);
+   
 
     handlePlayerGuessLetter(button);
     /**

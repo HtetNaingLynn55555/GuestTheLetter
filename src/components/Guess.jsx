@@ -71,7 +71,6 @@ export default function Guess() {
     setLetterBox(letterBox);
 
     // setBoxClicked(false);
-    console.log("Player guess letter: ", letter);
   };
 
   let onSubmitHandler = () => {
