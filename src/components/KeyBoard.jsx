@@ -8,7 +8,7 @@ import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import "./box.css";
 
-export default function KeyBoard({ handleGuestBoxState }) {
+export default function KeyBoard({ handleGuestBoxState, handlePlayerGuessLetter, amountOfKeyPress }) {
   const [input, setInput] = useState("");
   const [layout, setLayout] = useState("default");
   const keyboard = useRef();
@@ -26,6 +26,7 @@ export default function KeyBoard({ handleGuestBoxState }) {
   const onKeyPress = (button) => {
     console.log("Button pressed", button);
     handleGuestBoxState();
+    handlePlayerGuessLetter(button);
     /**
      * If you want to handle the shift and caps lock buttons
      */

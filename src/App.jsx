@@ -1,9 +1,9 @@
-import Guest from "./components/Guest";
+import Guess from "./components/Guess";
 import "./app.css";
 function App() {
   return (
     <>
-      <Guest />
+      <Guess />
     </>
   );
 }
