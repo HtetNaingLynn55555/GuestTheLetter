@@ -3,7 +3,8 @@ import KeyBoard from "./KeyBoard";
 import { useState } from "react";
 export default function Guest() {
   let [isPlaying, setIsPlaying] = useState(false);
-
+  let numberOfBox = [1, 2, 3, 4];
+  let [guestBoxActive, setGuestBoxActive] = useState(1);
   let playButtonHandler = () => {
     setIsPlaying(!isPlaying);
   };
@@ -21,10 +22,9 @@ export default function Guest() {
 
       {isPlaying && (
         <div className="flex justify-center items-center gap-6 mt-8">
-          <Box />
-          <Box />
-          <Box />
-          <Box />
+          {numberOfBox.map((box) => (
+            <Box key={box} guestBoxActive={guestBoxActive} indexNumber={box} />
+          ))}
         </div>
       )}
       {isPlaying && (
