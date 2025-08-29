@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import randomFourLetterArrayGenerator from "../utils/randomFourLetterArrayGenerator";
 
 let defaultAnswer = randomFourLetterArrayGenerator();
-console.log("defaultAnswer", defaultAnswer);
+
 export default function Guess() {
   // Game Lavel
   let [answer, setAnswer] = useState(defaultAnswer);
