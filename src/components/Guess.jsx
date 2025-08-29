@@ -8,7 +8,7 @@ console.log("defaultAnswer", defaultAnswer);
 export default function Guess() {
   // Game Lavel
   let [answer, setAnswer] = useState(defaultAnswer);
-
+  let [isHint, setIsHint] = useState(false);
   let [isPlaying, setIsPlaying] = useState(false);
   let [startTime, setStartTime] = useState(null);
   let [timeDifference, setTimeDifference] = useState(null);
@@ -100,10 +100,27 @@ export default function Guess() {
     setIsSubmitting(true);
   };
 
+  let getHintHandler = () => {
+    // Provide a hint to the player
+    setIsHint(!isHint);
+  };
+
   return (
     <div className=" font-poppins bg-bg-primary text-white bg-black flex flex-col justify-start items-center  h-auto  pt-4 gap-1 sm:gap-5">
       <div className="text-[20px] sm:text-3xl">Guess the letter in the box</div>
       <div> guess letter from a~z</div>
+
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex gap-2">
+          <div>get Hint</div>
+          <input
+            onClick={getHintHandler}
+            type="checkbox"
+            class="accent-teal-600"
+          />
+        </div>
+        {isHint && <div>{answer}</div>}
+      </div>
 
       <button
         className="border-2 border-white w-20 h-7 sm:w-40 sm:h-15 hover:cursor-pointer mt-4 sm:mt-8 rounded-lg hover:bg-[#6e706f]"
